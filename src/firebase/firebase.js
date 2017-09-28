@@ -3,6 +3,25 @@ import config from '../config/keys'
 
 firebase.initializeApp(config.firebase);
 
-firebase.database().ref().set({
-  name: 'Shayne Meyer'
+const database = firebase.database();
+
+database.ref().set({
+  name: 'Andrew Mead',
+  age: 26,
+  isSingle: false,
+  location: {
+    city: 'Philadelpia',
+    country: 'United States'
+  }
+});
+
+database.ref('age').set(27);
+database.ref('location/city').set('New York');
+
+// attributes
+// height
+// weight
+database.ref('attributes').set({
+  height: 5,
+  weight: 150
 });
