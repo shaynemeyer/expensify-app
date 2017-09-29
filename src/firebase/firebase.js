@@ -5,66 +5,53 @@ firebase.initializeApp(config.firebase);
 
 const database = firebase.database();
 
-database.ref().on('value', (snapshot) => {
-  const val = snapshot.val();
-  console.log(`${val.name} is a ${val.job.title} at ${val.job.company}.`);
-});
-
-// const onValueChange = database.ref().on('value', (snapshot) => {
-//   console.log(snapshot.val());
-// });
-//
-// setTimeout(() => {
-//   database.ref('age').set(29);
-// }, 3500);
-//
-// setTimeout(() => {
-//   database.ref().off(onValueChange);
-// }, 7000);
-//
-// setTimeout(() => {
-//   database.ref('age').set(30);
-// }, 10500);
-
-// database.ref()
+// database.ref('expenses')
 //   .once('value')
 //   .then((snapshot) => {
-//     const val = snapshot.val();
-//     console.log(val);
-//   })
-//   .catch((e) => {
-//     console.log('Error fetching data', e);
+//     const expenses = [];
+//
+//     snapshot.forEach((childSnapshot) => {
+//       expenses.push({
+//         id: childSnapshot.key,
+//         ...childSnapshot.val()
+//       });
+//     });
+//
+//     console.log(expenses);
 //   });
 
-// database.ref().set({
-//   name: 'Andrew Mead',
-//   age: 26,
-//   isSingle: false,
-//   stressLevel: 6,
-//   job: {
-//     title: 'Software Developer',
-//     company: 'Google'
-//   },
-//   location: {
-//     city: 'Philadelphia',
-//     country: 'United States'
-//   }
-// }).then(() => {
-//   console.log("Data is saved");
-// }).catch((e) => {
-//   console.log('This failed.', e);
-// });
+// child_removed
+database.ref('expenses').on('child_removed', (snapshot) => {
+  console.log(snapshot.key, snapshot.val());
+});
+
+// child_changed
+database.ref('expenses').on('child_changed', (snapshot) => {
+  console.log(snapshot.key, snapshot.val());
+});
+
+// child_added
+database.ref('expenses').on('child_added', (snapshot) => {
+  console.log(snapshot.key, snapshot.val());
+});
+
+// on change subscribe
+// database.ref('expenses').on('value', (snapshot) => {
+//   const expenses = [];
 //
-// database.ref().update({
-//   stressLevel: 9,
-//   'job/company': 'Amazon',
-//   'location/city': 'Seattle'
+//   snapshot.forEach((childSnapshot) => {
+//     expenses.push({
+//       id: childSnapshot.key,
+//       ...childSnapshot.val()
+//     });
+//   });
+//
+//   console.log(expenses);
 // });
 
-// database.ref('isSingle')
-// .remove()
-// .then(() => {
-//   console.log('Data was removed')
-// }).catch((e) => {
-//   console.log('Did not remove data.', e);
+// database.ref('expenses').push({
+//   description: 'Rent',
+//   note: '',
+//   amount: 8000,
+//   createdAt: 1400
 // });
