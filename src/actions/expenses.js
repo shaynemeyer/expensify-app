@@ -41,7 +41,7 @@ export const editExpense = (id, updates) => ({
 
 // SET_EXPENSES
 export const setExpenses = (expenses) => {
-  type: 'SET_EXPENSES'
+  type: 'SET_EXPENSES',
   expenses
 };
 
@@ -56,7 +56,7 @@ export const startSetExpenses = () => {
           ...childSnapshot.val()
         });
       });
-
+      
       dispatch(setExpenses(expenses));
     });
   };
