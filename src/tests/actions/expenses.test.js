@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {
   startAddExpense, addExpense, editExpense, removeExpense, setExpenses
 } from "../../actions/expenses";
+import expensesReducer from '../../reducers/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -98,9 +99,17 @@ test('should add expense with defaults to database and store', (done) => {
 
 test('should setup set expense action object with data', () => {
   const action = setExpenses(expenses);
-  console.log(action);
-  // expect(action).toEqual({
-  //   type: 'SET_EXPENSES',
-  //   expenses
-  // });
+  expect(action).toEqual({
+    type: 'SET_EXPENSES',
+    expenses
+  });
+});
+
+test('should set expenses', () => {
+  const action = {
+    type: 'SET_EXPENSES',
+    expenses: [expenses[1]]
+  };
+  const state = expensesReducer(expenses, action);
+  expect(state).toEqual([expenses[1]]);
 });
